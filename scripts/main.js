@@ -31,7 +31,7 @@ function getContent(){
 
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./scripts/sw.js')
+        navigator.serviceWorker.register('/sw.js')
             .then(registration => {
                 console.log('Service Worker berhasil didaftarkan: ', registration.scope);
             })
