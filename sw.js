@@ -16,23 +16,30 @@ self.addEventListener('fetch', event => {
         const clonedRequest = event.request.clone();
         console.log('test fetch');
         event.respondWith(
-            fetch(clonedRequest)
-                .then(response => {
-                    // Membuat respons baru dengan menambahkan header CORS
-                    const newHeaders = new Headers(response.headers);
-                    newHeaders.set('Access-Control-Allow-Origin', '*'); // Mengizinkan semua origin
+      fetch(clonedRequest)
+        .then(response => {
+          // Kloning respons karena objek respons tidak dapat diubah
+          const clonedResponse = response.clone();
+          
+          // Buat objek header baru dari respons asli
+          const headers = new Headers(clonedResponse.headers);
+          
+          // Tambahkan atau ubah header yang dibutuhkan untuk CORS
+          headers.set('Access-Control-Allow-Origin', '*'); // Mengizinkan dari semua domain
+          headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+          headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
-                    const newResponse = new Response(response.body, {
-                        status: response.status,
-                        statusText: response.statusText,
-                        headers: newHeaders,
-                    });
-                    return newResponse;
-                })
-                .catch(error => {
-                    console.error('Fetch gagal di Service Worker:', error);
-                    return new Response('Fetch failed', { status: 500 });
-                })
-        );
+          // Buat respons baru dengan body dan header yang dimodifikasi
+          return new Response(clonedResponse.body, {
+            status: clonedResponse.status,
+            statusText: clonedResponse.statusText,
+            headers: headers
+          });
+        })
+        .catch(error => {
+          console.error('Fetch gagal:', error);
+          return new Response('Proxy API tidak tersedia', { status: 503 });
+        })
+    );
     // }
 });
