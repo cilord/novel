@@ -17,9 +17,9 @@ function getContent(){
     if(linkNovel){
         fetch(linkNovel).then(r=>{
             if (!r.ok) {
-              throw new Error('Gagal mengambil data: ' + response.statusText);
+              throw new Error('Gagal mengambil data: ' + r.statusText);
             }
-            return response.text();
+            return r.text();
         })
         .then(data=>console.log(data))
         .catch(err=>console.error('ada masalah: ', err));
