@@ -16,7 +16,7 @@ document.getElementById("play").onclick=()=>{
 function getContent(){
     if(linkNovel){
         fetch(linkNovel).then(r=>{
-            if (!response.ok) {
+            if (!r.ok) {
               throw new Error('Gagal mengambil data: ' + response.statusText);
             }
             return response.text();
