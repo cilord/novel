@@ -12,10 +12,11 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('fetch', event => {
     // Memeriksa jika permintaan berasal dari domain yang ingin kita bypass
-    if (event.request.url.startsWith('https://meionovels.com/')) {
+    // if (event.request.url.startsWith('https://meionovels.com/')) {
+        const clonedRequest = event.request.clone();
         console.log('test fetch');
         event.respondWith(
-            fetch(event.request)
+            fetch(clonedRequest)
                 .then(response => {
                     // Membuat respons baru dengan menambahkan header CORS
                     const newHeaders = new Headers(response.headers);
@@ -33,5 +34,5 @@ self.addEventListener('fetch', event => {
                     return new Response('Fetch failed', { status: 500 });
                 })
         );
-    }
+    // }
 });
