@@ -14,7 +14,6 @@ document.getElementById("play").onclick=()=>{
 }
 
 function getContent(){
-    console.log('asd');
     if(linkNovel){
         fetch(linkNovel).then(r=>{
             if (!response.ok) {

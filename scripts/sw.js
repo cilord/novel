@@ -11,6 +11,7 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
+    console.log('fetching');
     // Memeriksa jika permintaan berasal dari domain yang ingin kita bypass
     event.respondWith(
         fetch(event.request)
